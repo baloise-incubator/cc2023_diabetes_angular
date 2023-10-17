@@ -1,18 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
 
-  items: string[] = [];
 
-  constructor() {
-  }
+export class AppComponent {}
 
-  ngOnInit(): void {
-    this.items = ['apple', 'banana']
-  }
-}
+export interface FoodIngredient { id: number; title: string }
