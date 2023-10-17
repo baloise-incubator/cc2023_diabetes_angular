@@ -10,12 +10,14 @@ import { CalculationComponent } from './calculation/calculation.component';
 import { SearchIngredientComponent } from './search-ingredient/search-ingredient.component';
 import {initializeKeycloak} from "./init/keycloak-init.factory";
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
+import { UserDropdownComponent } from './user-dropdown/user-dropdown.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalculationComponent,
-    SearchIngredientComponent
+    SearchIngredientComponent,
+    UserDropdownComponent
   ],
   imports: [
     BrowserModule,
