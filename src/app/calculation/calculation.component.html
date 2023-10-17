@@ -8,18 +8,18 @@
         <thead>
         <tr>
           <th scope="col">Lebensmittel</th>
-          <th scope="col">Menge</th>
+          <th scope="col">Menge in g</th>
           <th scope="col">Aktion</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of items">
-          <td scope="row">{{item.title}}</td>
+        <tr *ngFor="let item of weightPerItem">
+          <td scope="row">{{item.item.title}}</td>
           <td>
-            <input class="table-input" type="text" placeholder="Menge eintragen" aria-label="Text" (change)="updateItemWeight(item.id, $event)"/>
+            <input class="table-input" type="text" placeholder="Menge eintragen" aria-label="Text" (change)="updateItemWeight(item.item.id, $event)"/>
           </td>
           <td>
-            <button (click)="deleteItem(item.id)">
+            <button (click)="deleteItem(item.item.id)">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
                 <path fill="currentColor"
                       d="m9.4 16.5l2.6-2.6l2.6 2.6l1.4-1.4l-2.6-2.6L16 9.9l-1.4-1.4l-2.6 2.6l-2.6-2.6L8 9.9l2.6 2.6L8 15.1l1.4 1.4ZM7 21q-.825 0-1.413-.588T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.588 1.413T17 21H7Z"/>
@@ -57,7 +57,9 @@
         <thead>
         <tr>
           <th scope="col">Lebensmittel</th>
-          <th scope="col">Menge</th>
+          <th scope="col">Menge in g</th>
+          <th scope="col">Kohlenhydrate in g</th>
+          <th scope="col">Zucker in g</th>
           <th scope="col">KEs</th>
         </tr>
         </thead>
@@ -65,12 +67,16 @@
         <tr *ngFor="let i of weightPerItem">
           <td scope="row">{{i.item.title}}</td>
           <td>{{i.weight}}</td>
-          <td>3</td>
+          <td>{{getWeightedValue(i.item.carbohydrateAvailable, i.weight)}}</td>
+          <td>{{getWeightedValue(i.item.sugar, i.weight)}}</td>
+          <td>{{getWeightedValue(i.item.KE, i.weight)}}</td>
         </tr>
         </tbody>
         <tfoot>
         <tr>
-          <td scope="row">Summe</td>
+          <td scope="row">Summe KEs</td>
+          <td></td>
+          <td></td>
           <td></td>
           <td>3</td>
         </tr>
@@ -79,7 +85,7 @@
       <footer>
         <details>
           <summary>Gesamt Insulin Einheiten: {{insulinSum}}</summary>
-          <p>Berechnung: 3 KEs * Insulinfaktor (2) = Gesamt Insulin Einheiten: 6</p>
+          <p>Berechnung: KEs * Insulinfaktor (2) = Gesamt Insulin Einheiten</p>
         </details>
         <!--                    <p data-tooltip="3 KEs * Insulinfaktor (2) = Gesamt Insulin Einheiten: 6">Gesamt Insulin Einheiten: 6</p>-->
       </footer>

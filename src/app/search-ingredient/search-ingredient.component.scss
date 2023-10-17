@@ -1,11 +1,30 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.chip-list {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 #myUL {
   /* Remove default list styling */
   list-style-type: none;
   padding: 0;
   margin: 0;
-  height: 400px;
+  max-height: 400px;
   overflow-y: scroll;
+}
+
+.button {
+  width: 100%;
+  max-width: 500px;
 }
 
 #myUL li {

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FoodIngredient} from "../app.component";
 import {FoodService} from "../../api/food.service";
 import {StateService} from "../state.service";
@@ -8,9 +8,10 @@ import {StateService} from "../state.service";
   templateUrl: './search-ingredient.component.html',
   styleUrls: ['./search-ingredient.component.scss']
 })
-export class SearchIngredientComponent {
+export class SearchIngredientComponent implements OnInit {
   selectedItems: FoodIngredient[] = [];
   foundItems: FoodIngredient[] = [];
+  filterName = '';
 
   constructor(private foodService: FoodService, private stateService: StateService) {
   }
@@ -27,6 +28,7 @@ export class SearchIngredientComponent {
   selectItem(it: FoodIngredient) {
     this.selectedItems = [...this.selectedItems, it]
     this.stateService.setItems(this.selectedItems);
+    this.filterName = '';
     this.clearResult();
   }
 
@@ -37,5 +39,9 @@ export class SearchIngredientComponent {
 
   clearResult() {
     this.foundItems = [];
+  }
+
+  ngOnInit(): void {
+    this.selectedItems = this.stateService.items;
   }
 }

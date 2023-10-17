@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {StateService} from "../state.service";
 import {FoodIngredient} from "../app.component";
 
-type WeightItem = { item: FoodIngredient, weight: number | undefined };
+type WeightItem = { item: FoodIngredient, weight: number | undefined, carbSum: number };
 
 @Component({
   selector: 'app-calculation',
@@ -25,7 +25,7 @@ export class CalculationComponent implements OnInit {
 
   private initializeWeightPerItem() {
     this.weightPerItem = this.items.map(it => {
-      return {item: it, weight: undefined}
+      return {item: it, weight: undefined, carbSum: 0}
     })
   }
 
@@ -47,7 +47,12 @@ export class CalculationComponent implements OnInit {
     let foundItem = this.weightPerItem.find(it => it.item.id === id);
     if (foundItem) {
       foundItem.weight = parseInt((event.target as HTMLInputElement).value);
+      foundItem.carbSum = 2 * foundItem.weight; // TODO-MZ use field instead of 1
     }
     this.insulinSum = this.calculateInsulinSum(this.weightPerItem)
+  }
+
+  getWeightedValue(carbohydrateAvailable: number, weight: number|undefined) {
+    return weight ? carbohydrateAvailable / 100 * weight : 0
   }
 }

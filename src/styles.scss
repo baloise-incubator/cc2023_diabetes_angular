@@ -1,3 +1,6 @@
+html {
+  height: 100%;
+}
 .chip{
   display: inline-flex;
   flex-direction: row;
@@ -25,6 +28,7 @@
   white-space: nowrap;
   padding-left: 12px;
   padding-right: 12px;
+  color: black;
 }
 .chip-svg{
   color: #999999;
