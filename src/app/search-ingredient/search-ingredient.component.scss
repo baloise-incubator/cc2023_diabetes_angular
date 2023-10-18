@@ -1,9 +1,16 @@
 :host {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
+  flex: 1;
+}
+
+.content-container {
+  flex: 1
+}
+
+.footer-container {
+  flex: 0;
+  align-self: center;
 }
 
 .chip-list {
