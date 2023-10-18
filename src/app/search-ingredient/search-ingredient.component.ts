@@ -27,14 +27,14 @@ export class SearchIngredientComponent implements OnInit {
 
   selectItem(it: FoodIngredient) {
     this.selectedItems = [...this.selectedItems, it]
-    this.stateService.setItems(this.selectedItems);
+    this.stateService.setDialogIngredients(this.selectedItems);
     this.filterName = '';
     this.clearResult();
   }
 
   removeIngredient(id: number) {
     this.selectedItems = this.selectedItems.filter(it => it.id !== id);
-    this.stateService.setItems(this.selectedItems);
+    this.stateService.setDialogIngredients(this.selectedItems);
   }
 
   clearResult() {
@@ -42,6 +42,6 @@ export class SearchIngredientComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.selectedItems = this.stateService.items;
+    this.selectedItems = this.stateService.dialogIngredients;
   }
 }

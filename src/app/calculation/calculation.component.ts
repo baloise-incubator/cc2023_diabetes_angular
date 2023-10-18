@@ -20,12 +20,13 @@ export class CalculationComponent implements OnInit, OnDestroy {
   userProfile: UserProfile = {sensitivityMorning: 0.0, sensitivityNoon: 0.0, sensitivityEvening: 0.0};
   subscription: Subscription;
   selectedSensitivity: number = 0
+  showIngredientDialog = false;
 
 
   constructor(private stateService: StateService, private userProfileService: UserProfileService) {
     this.subscription = from(this.userProfileService.loadProfile()).subscribe((p: UserProfile) => {
       this.userProfile = {sensitivityMorning: p.sensitivityMorning,
-        sensitivityNoon: p.sensitivityNoon, 
+        sensitivityNoon: p.sensitivityNoon,
         sensitivityEvening: p.sensitivityEvening}
       this.selectedSensitivity = p.sensitivityMorning;
     });
@@ -36,7 +37,11 @@ export class CalculationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.items = this.stateService.items;
+    this.initializeView();
+  }
+
+  private initializeView() {
+    this.items = this.stateService.ingredients;
     this.initializeWeightPerItem();
     this.insulinSum = this.calculateInsulinSum(this.weightPerItem)
   }
@@ -46,7 +51,6 @@ export class CalculationComponent implements OnInit, OnDestroy {
       return {item: it, weight: undefined, carbSum: 0}
     })
   }
-
 
   private calculateInsulinSum(weightperItem: WeightItem[]): number {
     return weightperItem.reduce((accumulator, currentValue) => {
@@ -60,7 +64,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
       return accumulator + ((currentValue.weight ?? 0) * currentValue.item.carbohydrateUnits) ?? 0;
     }, 0);
   }
-  
+
   onSensitivityChanged(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     this.selectedSensitivity = parseFloat(value);
@@ -70,7 +74,7 @@ export class CalculationComponent implements OnInit, OnDestroy {
     this.items = this.items.filter(it => it.id !== id);
     this.initializeWeightPerItem();
     this.insulinSum = this.calculateInsulinSum(this.weightPerItem)
-    this.stateService.setItems(this.items);
+    this.stateService.setIngredients(this.items);
   }
 
   updateItemWeight(id: number, event: Event) {
@@ -85,5 +89,21 @@ export class CalculationComponent implements OnInit, OnDestroy {
 
   getWeightedValue(carbohydrateAvailable: number, weight: number|undefined) {
     return weight ? carbohydrateAvailable * weight : 0
+  }
+
+  closeDialog() {
+    this.toggleIngredientDialog();
+    this.initializeView();
+  }
+
+  toggleIngredientDialog() {
+    this.showIngredientDialog = !this.showIngredientDialog;
+    this.stateService.dialogIngredients = [];
+  }
+
+  saveIngredients() {
+    this.stateService.ingredients = [...this.stateService.ingredients, ...this.stateService.dialogIngredients];
+    this.initializeView();
+    this.toggleIngredientDialog();
   }
 }

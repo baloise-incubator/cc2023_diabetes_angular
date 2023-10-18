@@ -6,11 +6,16 @@ import {FoodIngredient} from "./app.component";
 })
 export class StateService {
 
-  items: FoodIngredient[] = [];
+  ingredients: FoodIngredient[] = [];
+  dialogIngredients: FoodIngredient[] = [];
 
   constructor() { }
 
-  setItems(items: FoodIngredient[]) {
-    this.items = items;
+  setIngredients(items: FoodIngredient[]) {
+    this.ingredients = items;
+  }
+
+  setDialogIngredients(items: FoodIngredient[]) {
+    this.dialogIngredients = items;
   }
 }
