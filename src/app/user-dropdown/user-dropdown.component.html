@@ -2,8 +2,33 @@
   <li role="list" dir="rtl">
     <a href="#" aria-haspopup="listbox">{{username$ | async}}</a>
     <ul role="listbox">
-      <li><a>Einstellung</a></li>
+      <li><a (click)="toggleDialog()">Einstellung</a></li>
       <li><a (click)="logout()">Abmelden</a></li>
     </ul>
   </li>
 </ul>
+
+<dialog [attr.open]="dialogVisible">
+  <article>
+    <h2>Deine Insulinsensitivität:</h2>
+    <fieldset><label for="morning">
+      Morgens
+      <input type="number" id="morning" step="0.1" [(ngModel)]="userProfile.sensitivityMorning">
+    </label>
+      <label for="noon">
+        Mittags
+        <input type="number" id="noon" step="0.1" [(ngModel)]="userProfile.sensitivityNoon">
+      </label>
+      <label for="evening">
+        Abends
+        <input type="number" id="evening" step="0.1" [(ngModel)]="userProfile.sensitivityEvening">
+      </label>
+    </fieldset>
+    <footer>
+      <button className="secondary"  (click)="toggleDialog()">
+        Cancel
+      </button>
+      <button (click)="saveUserProfile()">Save</button>
+    </footer>
+  </article>
+</dialog>
