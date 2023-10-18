@@ -10,7 +10,16 @@
 
 <dialog [attr.open]="dialogVisible">
   <article>
-    <h2>Deine Insulinsensitivität:</h2>
+    <h2>Deine individuellen KE-Faktoren:</h2>
+    <details>
+      <summary>Erklärung KE-Faktoren</summary>
+        <article>
+          Der Insulinbedarf pro KE ist von Mensch zu Mensch verschieden. Die individuellen KE-Faktoren für morgens, 
+          mittags und abends legt in der Regel der Arzt fest. Für die Berechnung der Insulindosis müssen nun die KE 
+          mit dem vom Arzt festgelegten KE-Faktor für die jeweilige Mahlzeit multipliziert werden.
+        </article>
+      </details>
+    
     <fieldset><label for="morning">
       Morgens
       <input type="number" id="morning" step="0.1" [(ngModel)]="userProfile.sensitivityMorning">

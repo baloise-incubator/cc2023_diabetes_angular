@@ -8,13 +8,15 @@
         <thead>
         <tr>
           <th scope="col">Lebensmittel</th>
-          <th scope="col">Menge in g</th>
+          <th scope="col">Einheit</th>
+          <th scope="col">Menge in Einheit</th>
           <th scope="col">Aktion</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let item of weightPerItem">
           <td scope="row">{{item.item.title}}</td>
+          <td scope="row">{{item.item.unit}}</td>
           <td>
             <input class="table-input" type="text" placeholder="Menge eintragen" aria-label="Text" (change)="updateItemWeight(item.item.id, $event)"/>
           </td>
@@ -33,19 +35,19 @@
 
     <article>
       <header>
-        <h3>Tageszeit für Insulinempfindlichkeitsfaktor</h3>
+        <h3>Tageszeit für KE-Faktor</h3>
       </header>
       <fieldset><label for="morning">
-        <input type="radio" id="morning" name="size" value="morning" checked>
-        Morgens
+        <input type="radio" id="morning" name="size" value="{{userProfile.sensitivityMorning}}"  (change)="onSensitivityChanged($event)" checked>
+        Morgens ({{userProfile.sensitivityMorning}})
       </label>
         <label for="noon">
-          <input type="radio" id="noon" name="size" value="noon">
-          Mittags
+          <input type="radio" id="noon" name="size" value="{{userProfile.sensitivityNoon}}"  (change)="onSensitivityChanged($event)">
+          Mittags ({{userProfile.sensitivityNoon}})
         </label>
         <label for="evening">
-          <input type="radio" id="evening" name="size" value="evening">
-          Abends
+          <input type="radio" id="evening" name="size" value="{{userProfile.sensitivityEvening}}"  (change)="onSensitivityChanged($event)">
+          Abends ({{userProfile.sensitivityEvening}})
         </label>
       </fieldset>
     </article>
@@ -57,7 +59,8 @@
         <thead>
         <tr>
           <th scope="col">Lebensmittel</th>
-          <th scope="col">Menge in g</th>
+          <th scope="col">Einheit</th>
+          <th scope="col">Menge in Einheit</th>
           <th scope="col">Kohlenhydrate in g</th>
           <th scope="col">Zucker in g</th>
           <th scope="col">KEs</th>
@@ -66,29 +69,40 @@
         <tbody>
         <tr *ngFor="let i of weightPerItem">
           <td scope="row">{{i.item.title}}</td>
+          <td scope="row">{{i.item.unit}}</td>
           <td>{{i.weight}}</td>
-          <td>{{getWeightedValue(i.item.carbohydrateAvailable, i.weight)}}</td>
-          <td>{{getWeightedValue(i.item.sugar, i.weight)}}</td>
-          <td>{{getWeightedValue(i.item.carbohydrateUnits, i.weight)}}</td>
+          <td>{{getWeightedValue(i.item.carbohydrateAvailable, i.weight) | number : '1.2-2'}}</td>
+          <td>{{getWeightedValue(i.item.sugar, i.weight) | number : '1.2-2'}}</td>
+          <td>{{getWeightedValue(i.item.carbohydrateUnits, i.weight) | number : '1.2-2'}}</td>
         </tr>
         </tbody>
-        <tfoot>
-        <tr>
-          <td scope="row">Summe KEs</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>3</td>
-        </tr>
-        </tfoot>
       </table>
-      <footer>
-        <details>
-          <summary>Gesamt Insulin Einheiten: {{insulinSum}}</summary>
-          <p>Berechnung: KEs * Insulinfaktor (2) = Gesamt Insulin Einheiten</p>
-        </details>
-        <!--                    <p data-tooltip="3 KEs * Insulinfaktor (2) = Gesamt Insulin Einheiten: 6">Gesamt Insulin Einheiten: 6</p>-->
-      </footer>
     </article>
+    <article>
+      <header>
+        <h3>Insulinbedarf: {{insulinSum | number : '1.2-2'}} Einheiten</h3>
+      </header>
+      <body>
+      <h4> Berechnung</h4>
+      <table>
+        <thead>
+          <th>Summe KEs</th>
+          <th></th>
+          <th>KE-Faktor</th>
+          <th></th>
+          <th><b>Insulineinheiten</b></th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{keSum | number : '1.2-2'}}</td>
+            <td>*</td>
+            <td>{{selectedSensitivity | number : '1.2-2'}}</td>
+            <td>=</td>
+            <td><b>{{insulinSum | number : '1.2-2'}}</b></td>
+          </tr>
+        </tbody>
+      </table>
+    </body>
+  </article>
   </div>
 </div>
