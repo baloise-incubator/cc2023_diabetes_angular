@@ -15,12 +15,14 @@ export class UserDropdownComponent implements OnDestroy {
   public dialogVisible: boolean = false;
 
   public userProfile: UserProfile = {sensitivityMorning: 0.0, sensitivityNoon: 0.0, sensitivityEvening: 0.0};
-  
+
   subscription: Subscription;
 
   constructor(private keycloakService: KeycloakService, private userProfileService: UserProfileService){
     this.subscription = from(this.userProfileService.loadProfile()).subscribe((p: UserProfile) => {
-      this.userProfile = {sensitivityMorning: p.sensitivityMorning, sensitivityNoon: p.sensitivityNoon, sensitivityEvening: p.sensitivityEvening}
+      if (p) {
+        this.userProfile = {sensitivityMorning: p.sensitivityMorning, sensitivityNoon: p.sensitivityNoon, sensitivityEvening: p.sensitivityEvening}
+      }
     });
     this.username$ = from(this.keycloakService.loadUserProfile()).pipe(map((p: KeycloakProfile) => p.username))
    }

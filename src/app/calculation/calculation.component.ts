@@ -25,10 +25,12 @@ export class CalculationComponent implements OnInit, OnDestroy {
 
   constructor(private stateService: StateService, private userProfileService: UserProfileService) {
     this.subscription = from(this.userProfileService.loadProfile()).subscribe((p: UserProfile) => {
-      this.userProfile = {sensitivityMorning: p.sensitivityMorning,
-        sensitivityNoon: p.sensitivityNoon,
-        sensitivityEvening: p.sensitivityEvening}
-      this.selectedSensitivity = p.sensitivityMorning;
+      if (p) {
+        this.userProfile = {sensitivityMorning: p.sensitivityMorning,
+          sensitivityNoon: p.sensitivityNoon,
+          sensitivityEvening: p.sensitivityEvening}
+        this.selectedSensitivity = p.sensitivityMorning;
+      }
     });
   }
 
