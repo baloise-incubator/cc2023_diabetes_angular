@@ -8,7 +8,7 @@ export function initializeKeycloak(
       config: {
         url: 'http://localhost:8081' + '/',
         realm: 'baloise-code-camp',
-        clientId: 'fronden-client',
+        clientId: 'frontend-client',
       },
       initOptions: {
         checkLoginIframe: false
