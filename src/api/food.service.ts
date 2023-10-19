@@ -7,7 +7,7 @@ import {FoodIngredient} from "../app/app.component";
   providedIn: 'root',
 })
 export class FoodService {
-  private baseUrl = 'api/json/food/search'; // Adjust the URL if needed
+  private baseUrl = 'api/json/food'; // Adjust the URL if needed
 
   constructor(private http: HttpClient) {}
 
