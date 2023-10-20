@@ -20,4 +20,4 @@ RUN chmod -R 777 /etc/nginx/ && \
 EXPOSE 8080
 USER nginx
 
-COPY --from=build /app/dist /usr/share/nginx/html/
+COPY --from=build /app/dist/cc2023_diabetes_angular /usr/share/nginx/html/
