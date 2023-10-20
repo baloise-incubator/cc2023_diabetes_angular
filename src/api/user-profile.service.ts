@@ -7,7 +7,7 @@ import { UserProfile} from "../app/app.component";
   providedIn: 'root',
 })
 export class UserProfileService {
-  private baseUrl = 'api/json/user-profile'; // Adjust the URL if needed
+  private baseUrl = 'spring/json/user-profile'; // Adjust the URL if needed
 
   constructor(private http: HttpClient) {}
 
